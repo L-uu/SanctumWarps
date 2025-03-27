@@ -77,15 +77,13 @@ namespace SanctumWarps
                 Plugin._localPlayer = NetworkClient.localPlayer.gameObject;
                 Plugin._playerMove = Plugin._localPlayer.GetComponent<PlayerMove>();
                 Plugin._player = Plugin._localPlayer.GetComponent<Player>();
-                Plugin.Logger.LogInfo("Player object found and warps loaded!");
             }
-
-            if (Plugin._player._mapName != "Sanctum") return false;
 
             foreach (var data in Plugin.TeleportLocations)
             {
                 if (data._triggers.Any(trigger => _message.ToLower().StartsWith(trigger)))
                 {
+                    if (Plugin._player._mapName != "Sanctum") return false;
                     Plugin._playerMove.enabled = false;
                     Plugin._localPlayer.transform.position = data._coords;
                     Plugin._localPlayer.transform.rotation = data._rot;
