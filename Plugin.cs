@@ -4,7 +4,6 @@ using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using Mirror;
-using SanctumWarps;
 using UnityEngine;
 
 namespace SanctumWarps
@@ -35,7 +34,7 @@ namespace SanctumWarps
             },
             new TeleportData
             {
-                _triggers = new[] { "/enhant", "/vivian" },
+                _triggers = new[] { "/enchant", "/vivian" },
                 _coords = new Vector3(258f, 5f, -265f),
                 _rot = Quaternion.Euler(0f, 100f, 0f),
                 _name = "Vivian"
@@ -73,7 +72,7 @@ namespace SanctumWarps
         [HarmonyPrefix]
         public static bool Send_ChatMessage_Prefix(string _message)
         {
-            if (!Plugin._localPlayer)
+            if (!Plugin._localPlayer && NetworkClient.localPlayer.isLocalPlayer)
             {
                 Plugin._localPlayer = NetworkClient.localPlayer.gameObject;
                 Plugin._playerMove = Plugin._localPlayer.GetComponent<PlayerMove>();
